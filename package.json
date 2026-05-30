@@ -1,0 +1,19 @@
+{
+  "name": "deepseek-immersive-translator",
+  "version": "5.5.0",
+  "description": "AI 驱动的沉浸式双语网页翻译 Chrome 扩展 — 滑动翻译 · 正文翻译 · 短语翻译 · 滑词翻译",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "build:zip": "node scripts/build.js --zip-only",
+    "build:crx": "node scripts/build.js --crx-only",
+    "prebuild": "node scripts/build.js --validate"
+  },
+  "keywords": ["chrome-extension", "translator", "deepseek", "immersive-translation", "bilingual"],
+  "author": "FistHeart",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FistHeart/DeepSeek-Immersive-Translator.git"
+  }
+}
