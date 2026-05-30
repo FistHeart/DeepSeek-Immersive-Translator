@@ -1,15 +1,16 @@
 /**
- * Popup Controller v4 — step-by-step guided setup with language confirmation.
+ * Popup Controller v5 — guided workflow WITHOUT hard locking.
  *
- * Flow:
- *   Step 1: Enter & save API key → unlocks Step 2
- *   Step 2: Select target language → Confirm → unlocks Step 3
- *   Step 3: Enable translation modes → ready
+ * Principles:
+ *   - Steps are visually guided but never rigidly blocked
+ *   - Default zh-CN is ALWAYS pre-confirmed — user proceeds immediately
+ *   - Confirm button only gates LANGUAGE CHANGES, not step navigation
+ *   - If current confirmed language is valid, all features are accessible
  *
  * Language state:
- *   pendingLanguage   — selected in dropdown (not yet applied)
- *   confirmedLanguage — confirmed via [Confirm] button (active translation target)
- *   On init: zh-CN is pre-confirmed (user can proceed immediately)
+ *   pendingLanguage   — dropdown selection (may differ from active)
+ *   confirmedLanguage — actively used for translation (always valid)
+ *   On init: zh-CN (or stored lang) is pre-confirmed, ready to use
  */
 document.addEventListener('DOMContentLoaded', async () => {
   const $ = id => document.getElementById(id);
@@ -37,10 +38,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const step3Badge = $('step3Badge');
 
   // ── Language state ──────────────────────────────
+  // confirmedLanguage = what features actually use (ALWAYS valid)
+  // pendingLanguage  = what's in the dropdown (may or may not match)
   let pendingLanguage = 'zh-CN';
   let confirmedLanguage = 'zh-CN';
-  let keyValidated = false;
-  let langConfirmed = false;
 
   // ═══════════════════════════════════════════════════
   //  INIT
@@ -69,31 +70,24 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     };
 
-    // Target language — init with stored preference, zh-CN is DEFAULT confirmed
+    // Language: stored preference or zh-CN — ALWAYS pre-confirmed
     const storedLang = prefs.targetLang || 'zh-CN';
     targetLang.value = storedLang;
     pendingLanguage = storedLang;
     confirmedLanguage = storedLang;
-
-    // CRITICAL FIX: zh-CN is pre-confirmed on startup.
-    // User does NOT need to switch and switch back.
-    // The stored language (or default zh-CN) is immediately active.
-    langConfirmed = true;
     updateLangUI('confirmed');
 
-    // Translation toggles
+    // Toggles
     toggleHover.checked   = !!prefs.hoverEnabled;
     toggleArticle.checked = !!prefs.articleEnabled;
     togglePhrase.checked  = !!prefs.phraseEnabled;
     toggleSel.checked     = !!prefs.selectionEnabled;
 
-    // Update step states
+    // Navigation: Step 2 + Step 3 unlock together when API key is saved
     if (key) {
-      unlockStep2();
-      if (langConfirmed) {
-        unlockStep3();
-      }
+      unlockAllSteps();
     }
+    // If no key yet, everything stays locked until user saves one
   }
 
   // ═══════════════════════════════════════════════════
@@ -114,7 +108,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       const valid = await validateKey();
       if (valid) {
         showFeedback(keyFeedback, 'API Key 验证成功', 'success');
-        unlockStep2();
+        // API key saved → unlock language + features together
+        unlockAllSteps();
       } else {
         showFeedback(keyFeedback, 'API Key 无效，请检查', 'error');
       }
@@ -133,10 +128,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     apiKeyInput.placeholder = 'sk-...';
     keyStatus.className = 'status-dot';
     keyStatus.title = '未验证';
-    keyValidated = false;
     hideFeedback(keyFeedback);
-    lockStep2();
-    lockStep3();
+    lockAllSteps();
   };
 
   async function validateKey() {
@@ -145,14 +138,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (r.valid) {
         keyStatus.className = 'status-dot valid';
         keyStatus.title = '已连接';
-        keyValidated = true;
         step1Badge.textContent = '已完成';
         step1Badge.className = 'step-badge step-badge--done';
         return true;
       } else {
         keyStatus.className = 'status-dot invalid';
         keyStatus.title = r.error || '无效';
-        keyValidated = false;
         step1Badge.textContent = '必需';
         step1Badge.className = 'step-badge';
         return false;
@@ -160,42 +151,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (e) {
       keyStatus.className = 'status-dot invalid';
       keyStatus.title = '无法连接';
-      keyValidated = false;
       return false;
     }
   }
 
   // ═══════════════════════════════════════════════════
-  //  STEP 2 — Target Language (with Confirm button)
+  //  STEP 2 — Target Language
   // ═══════════════════════════════════════════════════
+  //
+  //  confirmedLanguage is ALWAYS valid (zh-CN default or stored).
+  //  Changing dropdown → pending state (show confirm button).
+  //  The OLD confirmed language remains active until confirm.
+  //  Features always use confirmedLanguage — never blocked.
 
-  // Dropdown change → enters PENDING state (not yet applied)
   targetLang.onchange = () => {
     pendingLanguage = targetLang.value;
 
     if (pendingLanguage === confirmedLanguage) {
-      // User selected the already-confirmed language → hide confirm
       updateLangUI('confirmed');
       hideFeedback(langFeedback);
     } else {
-      // Different language selected → show confirm button
       updateLangUI('pending');
-      showFeedback(langFeedback, '已选择「' + getLangName(pendingLanguage) + '」，点击确认生效', 'info');
+      showFeedback(langFeedback,
+        '当前生效: ' + getLangName(confirmedLanguage) + ' → 新选择: ' + getLangName(pendingLanguage),
+        'info');
     }
   };
 
-  // Confirm button → commits pending language as active
   confirmLangBtn.onclick = () => {
     if (pendingLanguage === confirmedLanguage) return;
 
     confirmedLanguage = pendingLanguage;
     Storage.setPreferences({ targetLang: confirmedLanguage });
     notify('setLang', { lang: confirmedLanguage });
-
-    if (!langConfirmed) {
-      langConfirmed = true;
-      unlockStep3();
-    }
 
     updateLangUI('confirmed');
     hideFeedback(langFeedback);
@@ -222,29 +210,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ═══════════════════════════════════════════════════
   //  STEP 3 — Translation Modes
   // ═══════════════════════════════════════════════════
+  //
+  //  Always accessible when API key is saved.
+  //  Uses confirmedLanguage (always valid).
+  //  NOT gated on language confirmation.
 
   toggleHover.onchange = () => {
     Storage.setPreferences({ hoverEnabled: toggleHover.checked });
     notify('toggleHover', { enabled: toggleHover.checked });
-    console.log('[DTI] Translation mode: Hover=' + (toggleHover.checked ? 'ON' : 'OFF'));
   };
 
   toggleArticle.onchange = () => {
     Storage.setPreferences({ articleEnabled: toggleArticle.checked });
     notify('toggleArticle', { enabled: toggleArticle.checked });
-    console.log('[DTI] Translation mode: Article=' + (toggleArticle.checked ? 'ON' : 'OFF'));
   };
 
   togglePhrase.onchange = () => {
     Storage.setPreferences({ phraseEnabled: togglePhrase.checked });
     notify('togglePhrase', { enabled: togglePhrase.checked });
-    console.log('[DTI] Translation mode: Phrase=' + (togglePhrase.checked ? 'ON' : 'OFF'));
   };
 
   toggleSel.onchange = () => {
     Storage.setPreferences({ selectionEnabled: toggleSel.checked });
     notify('toggleSelection', { enabled: toggleSel.checked });
-    console.log('[DTI] Translation mode: Selection=' + (toggleSel.checked ? 'ON' : 'OFF'));
   };
 
   clearCacheBtn.onclick = async () => {
@@ -253,10 +241,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   // ═══════════════════════════════════════════════════
-  //  Step state helpers
+  //  Navigation — soft unlock (no hard gating)
   // ═══════════════════════════════════════════════════
 
-  function unlockStep2() {
+  /** Unlock Steps 2 + 3 together. API key is the ONLY gate. */
+  function unlockAllSteps() {
+    // Step 2
     step2.classList.remove('step--locked');
     targetLang.disabled = false;
     confirmLangBtn.disabled = false;
@@ -265,19 +255,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
       updateLangUI('confirmed');
     }
-    console.log('[DTI] Step 2 unlocked');
-  }
 
-  function lockStep2() {
-    step2.classList.add('step--locked');
-    targetLang.disabled = true;
-    confirmLangBtn.disabled = true;
-    langConfirmed = false;
-    step2Badge.textContent = '待解锁';
-    step2Badge.className = 'step-badge';
-  }
-
-  function unlockStep3() {
+    // Step 3 — always unlocked with Step 2
+    // confirmedLanguage is always valid (zh-CN default or stored)
     step3.classList.remove('step--locked');
     toggleHover.disabled = false;
     toggleArticle.disabled = false;
@@ -285,10 +265,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     toggleSel.disabled = false;
     step3Badge.textContent = '就绪';
     step3Badge.className = 'step-badge step-badge--ready';
-    console.log('[DTI] Step 3 unlocked: translation modes available');
+
+    console.log('[DTI] Steps 2+3 unlocked — active language: ' + confirmedLanguage);
   }
 
-  function lockStep3() {
+  /** Lock Steps 2 + 3 when API key is cleared */
+  function lockAllSteps() {
+    step2.classList.add('step--locked');
+    targetLang.disabled = true;
+    confirmLangBtn.disabled = true;
+    step2Badge.textContent = '待解锁';
+    step2Badge.className = 'step-badge';
+
     step3.classList.add('step--locked');
     toggleHover.disabled = true;
     toggleArticle.disabled = true;
