@@ -311,6 +311,28 @@ input:disabled,
 
 .mode-row:last-child { border-bottom: none; }
 
+/* Divider between automatic and manual translation features */
+.mode-divider {
+  display: flex; align-items: center;
+  padding: 6px 0 4px; margin-top: 2px;
+  border-top: 1px solid #f3f4f6;
+}
+.mode-divider-label {
+  font-size: 9px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #a78bfa;
+  background: rgba(167, 139, 250, 0.08); padding: 2px 8px; border-radius: 4px;
+}
+/* Selection — purple accent (independent feature) */
+.mode-row--selection .mode-name { color: #7c3aed; }
+.mode-row--selection .mode-desc { color: #a78bfa; }
+
+@media (prefers-color-scheme: dark) {
+  .mode-divider { border-top-color: #2d2d44; }
+  .mode-divider-label { background: rgba(167, 139, 250, 0.1); color: #a78bfa; }
+  .mode-row--selection .mode-name { color: #a78bfa; }
+  .mode-row--selection .mode-desc { color: #8b5cf6; }
+}
+
 .mode-info {
   display: flex;
   flex-direction: column;
