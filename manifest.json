@@ -24,6 +24,7 @@
       "lib/translation-cache.js",
       "lib/translation-queue.js",
       "lib/translator.js",
+      "lib/translation-validator.js",
       "lib/viewport-manager.js",
       "lib/popup-position-engine.js",
       "lib/hover-popup.js",

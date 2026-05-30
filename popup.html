@@ -1,34 +1,136 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>DeepSeek 沉浸式翻译</title><link rel="stylesheet" href="popup.css"></head>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>DeepSeek 沉浸式翻译</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
 <body>
 <div class="container">
-  <header class="header"><div class="logo"><span class="logo-icon">&#x1f310;</span><h1>DeepSeek 沉浸式翻译</h1></div><p class="subtitle">多模式 AI 阅读助手</p></header>
 
-  <section class="section">
-    <div class="section-header"><h2>API Key</h2><span class="status-dot" id="keyStatus"></span></div>
-    <div class="input-group"><input type="password" id="apiKeyInput" placeholder="sk-..." autocomplete="off" spellcheck="false"><div class="button-row"><button id="saveKeyBtn" class="btn btn-primary">保存</button><button id="clearKeyBtn" class="btn btn-ghost">清除</button></div></div>
-    <p class="hint">密钥仅存储在本地浏览器中。<a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">获取 Key</a></p>
+  <!-- ── Header ─────────────────────────────────── -->
+  <header class="header">
+    <div class="logo">
+      <span class="logo-icon">&#x1f310;</span>
+      <h1>DeepSeek 沉浸式翻译</h1>
+    </div>
+    <p class="subtitle">AI 多模式阅读助手</p>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  STEP 1 — API Key                             -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="step" id="step1">
+    <div class="step-head">
+      <span class="step-num">Step 1</span>
+      <span class="step-title">DeepSeek API Key</span>
+      <span class="step-badge" id="step1Badge">必需</span>
+    </div>
+    <div class="step-body">
+      <div class="input-row">
+        <input type="password" id="apiKeyInput" placeholder="sk-..." autocomplete="off" spellcheck="false">
+        <span class="status-dot" id="keyStatus" title="未验证"></span>
+      </div>
+      <div class="btn-row">
+        <button id="saveKeyBtn" class="btn btn-primary">保存并验证</button>
+        <button id="clearKeyBtn" class="btn btn-ghost">清除</button>
+      </div>
+      <p class="hint">密钥仅存储在本地浏览器。<a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">获取 Key →</a></p>
+      <div class="feedback" id="keyFeedback" style="display:none"></div>
+    </div>
   </section>
 
-  <section class="section">
-    <div class="section-header"><h2>翻译模式</h2></div>
-    <div class="toggle-row"><span>滑动翻译</span><label class="toggle"><input type="checkbox" id="toggleHover"><span class="toggle-slider"></span></label></div>
-    <p class="hint">鼠标悬停段落时显示翻译浮窗</p>
-    <div class="toggle-row"><span>正文翻译</span><label class="toggle"><input type="checkbox" id="toggleArticle"><span class="toggle-slider"></span></label></div>
-    <p class="hint">自动检测正文段落并翻译（红色→绿色），无需手动操作</p>
-    <div class="toggle-row"><span>短语翻译</span><label class="toggle"><input type="checkbox" id="togglePhrase"><span class="toggle-slider"></span></label></div>
-    <p class="hint">检测 2-10 词英文短语，显示黄色方块，点击翻译</p>
-    <div class="toggle-row"><span>滑词翻译</span><label class="toggle"><input type="checkbox" id="toggleSelection"><span class="toggle-slider"></span></label></div>
-    <p class="hint">选中文字后在附近显示翻译弹窗</p>
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  STEP 2 — Target Language                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="step step--locked" id="step2">
+    <div class="step-head">
+      <span class="step-num">Step 2</span>
+      <span class="step-title">选择目标语言</span>
+      <span class="step-badge" id="step2Badge">待解锁</span>
+    </div>
+    <div class="step-body">
+      <select id="targetLang" class="select" disabled>
+        <option value="zh-CN">简体中文</option>
+        <option value="zh-TW">繁體中文</option>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="fr">Français</option>
+      </select>
+      <p class="hint">选择翻译输出的目标语言，共 6 种精选语言</p>
+    </div>
   </section>
 
-  <section class="section">
-    <div class="control-group"><label class="label" for="targetLang">目标语言</label><select id="targetLang" class="select"><option value="zh-CN">中文（简体）</option><option value="zh-TW">中文（繁體）</option><option value="en">English</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option><option value="pt">Português</option><option value="ru">Русский</option><option value="ar">العربية</option><option value="vi">Tiếng Việt</option><option value="th">ไทย</option></select></div>
-    <div class="button-row"><button id="clearCacheBtn" class="btn btn-outline btn-sm">清除缓存</button></div>
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  STEP 3 — Translation Modes                   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="step step--locked" id="step3">
+    <div class="step-head">
+      <span class="step-num">Step 3</span>
+      <span class="step-title">启用翻译功能</span>
+      <span class="step-badge" id="step3Badge">待解锁</span>
+    </div>
+    <div class="step-body">
+      <div class="mode-list">
+        <!-- Hover -->
+        <div class="mode-row" id="modeHover">
+          <div class="mode-info">
+            <span class="mode-name">滑动翻译</span>
+            <span class="mode-desc">鼠标悬停段落时弹出翻译</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggleHover" disabled>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <!-- Article -->
+        <div class="mode-row" id="modeArticle">
+          <div class="mode-info">
+            <span class="mode-name">正文翻译</span>
+            <span class="mode-desc">自动检测段落并翻译，红色→绿色</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggleArticle" disabled>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <!-- Phrase -->
+        <div class="mode-row" id="modePhrase">
+          <div class="mode-info">
+            <span class="mode-name">短语翻译</span>
+            <span class="mode-desc">检测 2-10 词英文短语，黄色方块</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="togglePhrase" disabled>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <!-- Selection -->
+        <div class="mode-row" id="modeSelection">
+          <div class="mode-info">
+            <span class="mode-name">滑词翻译</span>
+            <span class="mode-desc">选中文字后弹出翻译</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggleSelection" disabled>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <button id="clearCacheBtn" class="btn btn-outline btn-sm" style="margin-top:12px;width:100%">清除翻译缓存</button>
+    </div>
   </section>
 
-  <section class="section" id="statusSection" style="display:none"><div id="statusMessage" class="status-message"></div></section>
-  <footer class="footer"><span>DeepSeek V4 Flash</span><span class="version">v5.5.0</span></footer>
+  <!-- ── Footer ─────────────────────────────────── -->
+  <footer class="footer">
+    <span>DeepSeek V4 Flash</span>
+    <span class="version">v5.5.0</span>
+  </footer>
 </div>
-<script src="lib/storage.js"></script><script src="popup.js"></script>
-</body></html>
+
+<script src="lib/storage.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
