@@ -29,7 +29,7 @@ Four independent translation modes cover every reading scenario: long-form artic
 |----------|--------|
 | **Bilingual Display** | Translations appear directly below original text — no tab switching |
 | **4 Translation Modes** | Article, Phrase, Hover, and Selection — each independently toggleable |
-| **13 Languages** | Chinese, Japanese, Korean, French, German, Spanish, Portuguese, Russian, Arabic, Vietnamese, Thai, and more |
+| **6 Languages** | Curated high-quality support: Chinese (Simplified/Traditional), English, Japanese, Korean, French |
 | **Paragraph Detection** | Intelligently identifies content, skips navigation, ads, and code blocks |
 | **Layout Preserving** | Non-invasive DOM injection compatible with React, Vue, and static sites |
 | **Auto-Translate** | Optional automatic translation for dynamically loaded content (SPA, infinite scroll) |
@@ -288,13 +288,6 @@ This extension implements a **zero-leak architecture**:
 | `ja` | 日本語 |
 | `ko` | 한국어 |
 | `fr` | Français |
-| `de` | Deutsch |
-| `es` | Español |
-| `pt` | Português |
-| `ru` | Русский |
-| `ar` | العربية |
-| `vi` | Tiếng Việt |
-| `th` | ไทย |
 
 ---
 
