@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>DeepSeek 沉浸式翻译</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+<div class="container">
+  <header class="header"><div class="logo"><span class="logo-icon">&#x1f310;</span><h1>DeepSeek 沉浸式翻译</h1></div><p class="subtitle">多模式 AI 阅读助手</p></header>
+
+  <section class="section">
+    <div class="section-header"><h2>API Key</h2><span class="status-dot" id="keyStatus"></span></div>
+    <div class="input-group"><input type="password" id="apiKeyInput" placeholder="sk-..." autocomplete="off" spellcheck="false"><div class="button-row"><button id="saveKeyBtn" class="btn btn-primary">保存</button><button id="clearKeyBtn" class="btn btn-ghost">清除</button></div></div>
+    <p class="hint">密钥仅存储在本地浏览器中。<a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">获取 Key</a></p>
+  </section>
+
+  <section class="section">
+    <div class="section-header"><h2>翻译模式</h2></div>
+    <div class="toggle-row"><span>滑动翻译</span><label class="toggle"><input type="checkbox" id="toggleHover"><span class="toggle-slider"></span></label></div>
+    <p class="hint">鼠标悬停段落时显示翻译浮窗</p>
+    <div class="toggle-row"><span>正文翻译</span><label class="toggle"><input type="checkbox" id="toggleArticle"><span class="toggle-slider"></span></label></div>
+    <p class="hint">自动检测正文段落翻译（红色→绿色）。短语（3-10词）显示黄色方块，点击翻译。</p>
+    <div class="toggle-row"><span>滑词翻译</span><label class="toggle"><input type="checkbox" id="toggleSelection"><span class="toggle-slider"></span></label></div>
+    <p class="hint">选中文字后在附近显示翻译弹窗</p>
+  </section>
+
+  <section class="section">
+    <div class="control-group"><label class="label" for="targetLang">目标语言</label><select id="targetLang" class="select"><option value="zh-CN">中文（简体）</option><option value="zh-TW">中文（繁體）</option><option value="en">English</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="es">Español</option><option value="pt">Português</option><option value="ru">Русский</option><option value="ar">العربية</option><option value="vi">Tiếng Việt</option><option value="th">ไทย</option></select></div>
+    <div class="button-row"><button id="clearCacheBtn" class="btn btn-outline btn-sm">清除缓存</button></div>
+  </section>
+
+  <section class="section" id="statusSection" style="display:none"><div id="statusMessage" class="status-message"></div></section>
+  <footer class="footer"><span>DeepSeek V4 Flash</span><span class="version">v5.0.0</span></footer>
+</div>
+<script src="lib/storage.js"></script><script src="popup.js"></script>
+</body></html>

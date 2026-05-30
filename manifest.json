@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "DeepSeek Immersive Translator",
+  "version": "5.0.0",
+  "description": "多模式 AI 沉浸式阅读助手 — 滑动翻译 · 正文翻译 · 滑词翻译 · 短语翻译，由 DeepSeek V4 Flash 驱动。",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["https://api.deepseek.com/*"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": [
+      "lib/utils.js",
+      "lib/storage.js",
+      "lib/dom-handler.js",
+      "lib/readability-engine.js",
+      "lib/content-classifier.js",
+      "lib/adapters/generic.js",
+      "lib/adapters/reddit.js",
+      "lib/adapters/twitter.js",
+      "lib/adapters/medium.js",
+      "lib/adapters/arxiv.js",
+      "lib/dom-scanner.js",
+      "lib/paragraph-indexer.js",
+      "lib/translation-cache.js",
+      "lib/translation-queue.js",
+      "lib/translator.js",
+      "lib/viewport-manager.js",
+      "lib/popup-position-engine.js",
+      "lib/hover-popup.js",
+      "lib/paragraph-state-manager.js",
+      "lib/translation-watchdog.js",
+      "lib/article-phrase-translator.js",
+      "lib/article-translator.js",
+      "lib/selection-translator.js",
+      "content.js"
+    ],
+    "css": ["lib/content.css"]
+  }],
+  "action": { "default_popup": "popup.html", "default_title": "DeepSeek Translator", "default_icon": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" } },
+  "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" }
+}
