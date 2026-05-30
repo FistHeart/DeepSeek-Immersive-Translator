@@ -167,6 +167,7 @@
   padding-left: 0;
   padding-right: 0;
   border-left-width: 0;
+  pointer-events: none;
 }
 .ds-phrase-retry {
   display: inline-block;
