@@ -1,6 +1,6 @@
 {
   "name": "deepseek-immersive-translator",
-  "version": "5.5.0",
+  "version": "7.0.1",
   "description": "AI 驱动的沉浸式双语网页翻译 Chrome 扩展 — 滑动翻译 · 正文翻译 · 短语翻译 · 滑词翻译",
   "private": true,
   "scripts": {

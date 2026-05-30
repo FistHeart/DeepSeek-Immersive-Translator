@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "DeepSeek Immersive Translator",
-  "version": "5.5.0",
+  "version": "7.0.1",
   "description": "多模式 AI 沉浸式阅读助手 — 滑动翻译 · 正文翻译 · 滑词翻译 · 短语翻译，由 DeepSeek V4 Flash 驱动。",
   "permissions": ["storage", "activeTab", "scripting"],
   "host_permissions": ["https://api.deepseek.com/*"],
