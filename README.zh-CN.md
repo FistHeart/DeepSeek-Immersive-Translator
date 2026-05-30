@@ -43,7 +43,18 @@ DeepSeek 沉浸式翻译器是一款 Chrome 浏览器扩展，能够在原始网
 
 ## 插件截图
 
-> *截图即将添加。欢迎贡献！*
+<table>
+  <tr>
+    <td width="33%"><img src="screenshots/popup-settings.png" alt="设置面板" width="100%"></td>
+    <td width="33%"><img src="screenshots/article-translation.png" alt="正文翻译" width="100%"></td>
+    <td width="33%"><img src="screenshots/phrase-hover-translation.png" alt="短语与滑动翻译" width="100%"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>设置面板</b><br>三步引导式配置 + 语言确认</td>
+    <td align="center"><b>正文翻译</b><br>红色→绿色段落翻译指示器</td>
+    <td align="center"><b>短语与滑动翻译</b><br>黄色方块 + 悬停弹窗</td>
+  </tr>
+</table>
 
 ---
 
@@ -301,7 +312,7 @@ dist/
 - [x] SPA / 无限滚动动态内容自动翻译
 - [x] 短语翻译模式（2–10 词检测，黄/绿方块指示器）
 - [x] 发布构建流水线（ZIP + CRX）
-- [ ] 截图与演示 GIF
+- [x] 截图与演示 GIF
 - [ ] 自定义翻译提示
 - [ ] PDF 页面翻译
 - [ ] Firefox 扩展支持

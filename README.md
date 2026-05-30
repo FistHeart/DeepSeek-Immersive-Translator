@@ -43,7 +43,18 @@ Four independent translation modes cover every reading scenario: long-form artic
 
 ## Screenshots
 
-> *Screenshots coming soon. Contributions welcome!*
+<table>
+  <tr>
+    <td width="33%"><img src="screenshots/popup-settings.png" alt="Settings Panel" width="100%"></td>
+    <td width="33%"><img src="screenshots/article-translation.png" alt="Article Translation" width="100%"></td>
+    <td width="33%"><img src="screenshots/phrase-hover-translation.png" alt="Phrase & Hover" width="100%"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Settings Panel</b><br>3-step guided setup with language confirmation</td>
+    <td align="center"><b>Article Translation</b><br>RED→GREEN indicators below each paragraph</td>
+    <td align="center"><b>Phrase & Hover Translation</b><br>YELLOW squares + hover popup</td>
+  </tr>
+</table>
 
 ---
 
@@ -301,7 +312,7 @@ This extension implements a **zero-leak architecture**:
 - [x] Auto-translate for dynamic content (SPA, infinite scroll)
 - [x] Phrase translation mode (2–10 word detection, YELLOW/GREEN indicators)
 - [x] Release build pipeline (ZIP + CRX)
-- [ ] Screenshots & demo GIFs
+- [x] Screenshots & demo GIFs
 - [ ] Custom translation prompts
 - [ ] PDF page translation
 - [ ] Firefox extension support
