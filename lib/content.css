@@ -1,4 +1,4 @@
-/** DTI v5 Styles — article blocks + paragraph indicators + phrase indicators + dark mode. */
+/** DTI v5 Styles — article blocks + paragraph indicators + dark mode. */
 
 /* ── Article translation blocks ───────────────────── */
 
@@ -84,114 +84,6 @@
   cursor: pointer;
 }
 
-/* ── Phrase indicators (square) ───────────────────── */
-
-.ds-phrase-indicator {
-  display: inline-block;
-  width: 8px; height: 8px;
-  border-radius: 2px;      /* Square for phrases */
-  margin-left: 4px;
-  vertical-align: middle;
-  flex-shrink: 0;
-  pointer-events: auto;
-  transition: background .2s, box-shadow .2s, transform .15s;
-}
-.ds-phrase-indicator.phrase-detected {
-  background: #eab308;       /* YELLOW square */
-  box-shadow: 0 0 4px rgba(234,179,8,.5);
-  cursor: pointer;
-  animation: dsPulseYellow 2s ease-in-out infinite;
-}
-.ds-phrase-indicator.phrase-detected:hover {
-  transform: scale(1.3);
-  box-shadow: 0 0 8px rgba(234,179,8,.7);
-}
-.ds-phrase-indicator.phrase-loading {
-  width: 12px; height: 12px;
-  border: 2px solid rgba(234,179,8,.25);
-  border-top-color: #eab308;
-  border-radius: 2px;
-  animation: dsSpin .6s linear infinite;
-  background: transparent;
-  box-shadow: none;
-  cursor: default;
-}
-.ds-phrase-indicator.phrase-success {
-  background: #22c55e;       /* GREEN square */
-  box-shadow: 0 0 4px rgba(34,197,94,.5);
-  cursor: pointer;
-}
-.ds-phrase-indicator.phrase-success:hover {
-  transform: scale(1.3);
-}
-.ds-phrase-indicator.phrase-error {
-  width: 10px; height: 10px;
-  background: #ef4444;       /* RED square */
-  border-radius: 2px;
-  box-shadow: 0 0 6px rgba(239,68,68,.6);
-  cursor: pointer;
-}
-.ds-phrase-indicator.phrase-error:hover {
-  transform: scale(1.3);
-}
-
-/* Yellow pulse animation for detected phrases */
-@keyframes dsPulseYellow {
-  0%, 100% { box-shadow: 0 0 4px rgba(234,179,8,.5); }
-  50% { box-shadow: 0 0 10px rgba(234,179,8,.8); }
-}
-
-/* ── Phrase translation mini block ────────────────── */
-
-.ds-phrase-block {
-  display: inline-block;
-  margin: 0 0 0 6px;
-  padding: 2px 8px;
-  background: rgba(234,179,8,0.08);
-  border-left: 2px solid #eab308;
-  border-radius: 0 4px 4px 0;
-  font-size: .85em;
-  line-height: 1.55;
-  color: #6b7280;
-  vertical-align: middle;
-  max-width: 360px;
-  animation: dsIn .15s ease-out;
-  word-break: break-word;
-  transition: opacity .2s ease, max-width .2s ease, margin .2s ease, padding .2s ease;
-  overflow: hidden;
-}
-.ds-phrase-block.ds-phrase-collapsing {
-  opacity: 0;
-  max-width: 0;
-  margin-left: 0;
-  padding-left: 0;
-  padding-right: 0;
-  border-left-width: 0;
-  pointer-events: none;
-}
-.ds-phrase-retry {
-  display: inline-block;
-  width: 16px; height: 16px;
-  margin-left: 4px;
-  border-radius: 3px;
-  border: 1px solid rgba(0,0,0,.06);
-  background: rgba(0,0,0,.03);
-  color: #9ca3af;
-  cursor: pointer;
-  font-size: 10px;
-  line-height: 16px;
-  text-align: center;
-  vertical-align: middle;
-  opacity: 0;
-  transition: opacity .15s;
-}
-.ds-phrase-block:hover .ds-phrase-retry { opacity: 1; }
-.ds-phrase-retry:hover {
-  background: rgba(234,179,8,.15);
-  color: #b45309;
-  border-color: rgba(234,179,8,.25);
-}
-
 /* ── Keyframes ────────────────────────────────────── */
 
 @keyframes dsIn {
@@ -218,21 +110,6 @@
     background: rgba(129,140,248,.2);
     color: #a5b4fc;
   }
-
-  .ds-phrase-block {
-    background: rgba(234,179,8,0.1);
-    color: #d1d5db;
-  }
-  .ds-phrase-retry {
-    border-color: rgba(255,255,255,.06);
-    background: rgba(255,255,255,.04);
-    color: #6b7280;
-  }
-  .ds-phrase-retry:hover {
-    background: rgba(234,179,8,.2);
-    color: #fbbf24;
-    border-color: rgba(234,179,8,.3);
-  }
 }
 
 html[data-theme=dark] .ds-art-block,
@@ -248,9 +125,5 @@ body.dark-mode .ds-art-block {
   .ds-art-block {
     font-size: .85em;
     padding: 6px 10px 6px 24px;
-  }
-  .ds-phrase-block {
-    max-width: 240px;
-    font-size: .8em;
   }
 }

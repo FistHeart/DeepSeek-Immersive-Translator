@@ -29,12 +29,17 @@
       "lib/hover-popup.js",
       "lib/paragraph-state-manager.js",
       "lib/translation-watchdog.js",
-      "lib/article-phrase-translator.js",
       "lib/article-translator.js",
       "lib/selection-translator.js",
+      "lib/phrase/phrase-cache-manager.js",
+      "lib/phrase/phrase-detector.js",
+      "lib/phrase/phrase-renderer.js",
+      "lib/phrase/phrase-translator.js",
+      "lib/phrase/phrase-lifecycle.js",
+      "lib/phrase/phrase-module.js",
       "content.js"
     ],
-    "css": ["lib/content.css"]
+    "css": ["lib/content.css", "lib/phrase/phrase.css"]
   }],
   "action": { "default_popup": "popup.html", "default_title": "DeepSeek Translator", "default_icon": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" } },
   "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" }
