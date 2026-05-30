@@ -256,6 +256,16 @@ input:disabled,
   font-size: 11px;
 }
 
+/* Confirm language button — slides in when language changes */
+#confirmLangBtn {
+  animation: dsSlideIn 0.15s ease-out;
+}
+
+@keyframes dsSlideIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ── Status dot (API key validation) ─────────────── */
 
 .status-dot {
