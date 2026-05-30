@@ -25,7 +25,8 @@ const { execSync } = require('child_process');
 const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 const MANIFEST_PATH = path.join(ROOT, 'manifest.json');
-const KEY_PATH = path.join(ROOT, 'key.pem');
+// Store key.pem outside extension directory — Chrome rejects keys inside the extension
+const KEY_PATH = path.join(path.dirname(ROOT), 'key.pem');
 
 // Chrome paths (macOS → Linux → fallback)
 const CHROME_CANDIDATES = [

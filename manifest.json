@@ -20,7 +20,6 @@
       "lib/adapters/medium.js",
       "lib/adapters/arxiv.js",
       "lib/dom-scanner.js",
-      "lib/paragraph-indexer.js",
       "lib/translation-cache.js",
       "lib/translation-queue.js",
       "lib/translator.js",
