@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const $ = id => document.getElementById(id);
   const apiKeyInput = $('apiKeyInput'), saveKeyBtn = $('saveKeyBtn'), clearKeyBtn = $('clearKeyBtn'), keyStatus = $('keyStatus');
   const targetLang = $('targetLang');
-  const toggleHover = $('toggleHover'), toggleArticle = $('toggleArticle'), toggleSelection = $('toggleSelection');
+  const toggleHover = $('toggleHover'), toggleArticle = $('toggleArticle'), togglePhrase = $('togglePhrase'), toggleSelection = $('toggleSelection');
   const clearCacheBtn = $('clearCacheBtn'), statusSection = $('statusSection'), statusMessage = $('statusMessage');
 
   await init();
@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   toggleHover.onchange = () => { const on = toggleHover.checked; Storage.setPreferences({ hoverEnabled: on }); notify('toggleHover', { enabled: on }); };
   toggleArticle.onchange = () => { const on = toggleArticle.checked; Storage.setPreferences({ articleEnabled: on }); notify('toggleArticle', { enabled: on }); };
+  togglePhrase.onchange = () => { const on = togglePhrase.checked; Storage.setPreferences({ phraseEnabled: on }); notify('togglePhrase', { enabled: on }); };
   toggleSelection.onchange = () => { const on = toggleSelection.checked; Storage.setPreferences({ selectionEnabled: on }); notify('toggleSelection', { enabled: on }); };
 
   async function validate() { try { const r = await chrome.runtime.sendMessage({ action: 'validateKey' }); keyStatus.className = 'status-dot ' + (r.valid ? 'valid' : 'invalid'); keyStatus.title = r.valid ? '已连接' : (r.error || '无效'); } catch (e) { keyStatus.className = 'status-dot invalid'; } }
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     targetLang.value = prefs.targetLang || 'zh-CN';
     toggleHover.checked = !!prefs.hoverEnabled;
     toggleArticle.checked = !!prefs.articleEnabled;
+    togglePhrase.checked = !!prefs.phraseEnabled;
     toggleSelection.checked = !!prefs.selectionEnabled;
   }
 });
