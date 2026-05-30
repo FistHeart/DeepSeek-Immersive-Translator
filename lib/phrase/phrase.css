@@ -141,6 +141,22 @@
   color: inherit;
 }
 
+/* Highlighted phrase portion inside full-line translation */
+.ds-ph-highlight {
+  background: rgba(234, 179, 8, 0.18);
+  border-radius: 2px;
+  padding: 0 2px;
+  font-weight: 500;
+  color: #92400e;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ds-ph-highlight {
+    background: rgba(234, 179, 8, 0.22);
+    color: #fbbf24;
+  }
+}
+
 /* Refresh button */
 .ds-ph-refresh {
   display: inline-block;
