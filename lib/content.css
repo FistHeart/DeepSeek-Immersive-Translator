@@ -24,6 +24,20 @@
   padding: 0 12px 0 28px;
   border-left-width: 0;
 }
+
+/* Child-mode block — inside <li>/<td> where sibling <div> is invalid HTML */
+.ds-art-block--child {
+  display: block;
+  margin: 6px 0 4px;
+  padding: 6px 10px 6px 24px;
+  border-left: 2px solid #818cf8;
+  background: rgba(79,70,229,0.04);
+  border-radius: 0 6px 6px 0;
+  font-size: .88em;
+  line-height: 1.6;
+  color: #6b7280;
+  animation: dsIn .2s ease-out;
+}
 .ds-art-retry {
   position: absolute;
   left: 4px; top: 4px;
@@ -113,8 +127,11 @@
 }
 
 html[data-theme=dark] .ds-art-block,
+html[data-theme=dark] .ds-art-block--child,
 html.dark .ds-art-block,
-body.dark-mode .ds-art-block {
+html.dark .ds-art-block--child,
+body.dark-mode .ds-art-block,
+body.dark-mode .ds-art-block--child {
   background: rgba(129,140,248,.06);
   color: #d1d5db;
 }

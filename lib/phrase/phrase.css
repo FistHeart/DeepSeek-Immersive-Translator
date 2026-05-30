@@ -109,6 +109,21 @@
   overflow: hidden;
 }
 
+/* Child-mode block — inside <li>/<td> where sibling span is invalid */
+.ds-ph-block--child {
+  display: block;
+  margin: 3px 0 2px;
+  padding: 2px 8px;
+  background: rgba(234, 179, 8, 0.07);
+  border-left: 2px solid #eab308;
+  border-radius: 0 4px 4px 0;
+  font-size: .83em;
+  line-height: 1.5;
+  color: #6b7280;
+  max-width: 100%;
+  word-break: break-word;
+}
+
 /* Collapsing state — animated removal */
 .ds-ph-block.ds-ph-collapsing {
   opacity: 0;
@@ -176,7 +191,8 @@
    ══════════════════════════════════════════════════════════════ */
 
 @media (prefers-color-scheme: dark) {
-  .ds-ph-block {
+  .ds-ph-block,
+  .ds-ph-block--child {
     background: rgba(234, 179, 8, 0.1);
     color: #d1d5db;
   }
@@ -209,8 +225,11 @@
 
 /* Explicit dark mode class support (for sites that toggle dark mode) */
 html[data-theme="dark"] .ds-ph-block,
+html[data-theme="dark"] .ds-ph-block--child,
 html.dark .ds-ph-block,
-body.dark-mode .ds-ph-block {
+html.dark .ds-ph-block--child,
+body.dark-mode .ds-ph-block,
+body.dark-mode .ds-ph-block--child {
   background: rgba(234, 179, 8, 0.1);
   color: #d1d5db;
 }
