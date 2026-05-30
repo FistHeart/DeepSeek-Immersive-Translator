@@ -19,6 +19,7 @@
       "lib/adapters/twitter.js",
       "lib/adapters/medium.js",
       "lib/adapters/arxiv.js",
+      "lib/adapters/wikipedia.js",
       "lib/dom-scanner.js",
       "lib/translation-cache.js",
       "lib/translation-queue.js",
